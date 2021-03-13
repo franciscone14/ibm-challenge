@@ -1,0 +1,24 @@
+#search-bug {
+    flex: 1 100vh;
+    text-align: center;
+    /* display: block; */
+}
+
+input {
+    width: 525px;
+    padding-inline: 10px;
+    padding-block: 10px;
+    /* display: block; */
+    margin-top: 40vh;
+    /* align-self: center; */
+    /* text-align: center; */
+}
+
+input:hover {
+
+}
+
+button {
+    margin: 1rem;
+    padding: 10px;
+}

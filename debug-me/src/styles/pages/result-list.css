@@ -1,0 +1,34 @@
+h1 {
+    margin-left: 1rem;
+}
+
+#list-container {
+    align-items: center;
+}
+
+#item {
+    
+}
+
+#tag-row {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+}
+
+.tag {
+    width: max-content;
+    margin-inline: 1px;
+}
+
+a {
+    color: darkblue;
+    font-size: larger;
+}
+
+i {
+    color: green;
+}
+i.red{
+    color: red;
+}

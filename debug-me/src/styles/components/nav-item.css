@@ -1,0 +1,10 @@
+#nav-item {
+    /* flex: 1; */
+    margin: 20px;
+    align-items: center;
+}
+
+a {
+    color: rgb(167, 161, 161);
+    text-decoration: none;
+}
