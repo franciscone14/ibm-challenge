@@ -4,6 +4,7 @@ h1 {
 
 #list-container {
     align-items: center;
+    width: 100vw !important;
 }
 
 #item {

@@ -1,9 +1,10 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { Redirect, RouteComponentProps, useParams } from 'react-router';
+import ItemsContext from '../contexts/ItemsContext';
 import { Question } from '../models/Question';
 
 import '../styles/pages/result-list.css';
-
-import {items} from '../items';
 
 interface ListItemProps {
   item: Question
@@ -13,7 +14,7 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
   return (
     <div className="card mb-3">
       <div className="card-header">
-        {item.title.toUpperCase()}
+        {item.title}
       </div>
       <div className="card-body">
         <div id="tag-row">
@@ -58,10 +59,23 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
 }
 
 const ResultList: React.FC = () => {
+  const { id } = useParams<{id:string}>();
+  const [ items, setItems ] = useState<Question[]>([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/searches/${id}`)
+      .then(res => {
+        setItems(res.data.items);
+      })
+      .catch(err => console.log(err.response));
+  }, [])
+  // if(items.length === 0)
+  //   return <Redirect to="/" />
+
   return (
       <div id="list-container" className="container">
         <h1>Related Questions</h1>
-        <div className="container">
+        <div className="container-xxl">
         {
           items.map(item => (
             <ListItem

@@ -1,7 +1,7 @@
 const Config = {
     google: {
-      clientID: '245156008257-1tfmnqd847o1l2p5p0af5k4p6gj5qe8k.apps.googleusercontent.com',
-      clientSecret: 'DjFq7sAwF9jz8DXcHMRt9uKq',
+      clientID: '245156008257-jbfr84rq6gqqnj11k7qktu9s9fje6ct8.apps.googleusercontent.com',
+      clientSecret: 'ClUyBw3ur5OsyzAcThAHFYJC',
       callbackURL: "/auth/google/callback"
     },
     linkedin: {

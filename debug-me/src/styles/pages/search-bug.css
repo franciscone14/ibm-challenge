@@ -1,21 +1,16 @@
-#search-bug {
-    flex: 1 100vh;
-    text-align: center;
-    /* display: block; */
+form.container {
+    margin-top: 30vh;
+    display: flex !important;
+    align-items: center !important;
 }
 
 input {
-    width: 525px;
+    width: 525px !important;
     padding-inline: 10px;
     padding-block: 10px;
     /* display: block; */
-    margin-top: 40vh;
     /* align-self: center; */
     /* text-align: center; */
-}
-
-input:hover {
-
 }
 
 button {
