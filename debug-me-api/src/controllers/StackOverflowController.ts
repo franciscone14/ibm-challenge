@@ -1,6 +1,5 @@
-import { query, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import axios from 'axios';
-import { Question } from '../models/Question';
 import { Search } from '../models/Search';
 
 export default {
@@ -17,7 +16,7 @@ export default {
                 query: query,
                 pagination: res.data.items.length | 0,
                 items: res.data.items,
-                // user: request.userId || ''
+                user: request.session.userId
             }).save().then(newSearch => {
                 response.json({result: 'ok', id: newSearch._id});
             });
