@@ -1,8 +1,4 @@
 import { Router } from 'express';
-import Config from './config/config';
-
-import passportGoogle from './auth/google';
-import google from './auth/google';
 import verifyToken from './middlewares/token';
 import StackOverflowController from './controllers/StackOverflowController';
 import SearchHistoryController from './controllers/SearchHistoryController';
