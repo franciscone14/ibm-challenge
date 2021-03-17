@@ -11,7 +11,7 @@ export interface ISearch extends Document {
 const SearchSchema: Schema = new Schema({
   query: { type: String, required: true },
   pagination: { type: String, required: false},
-  userId: { type: String, required: false },
+  userId: { type: String, required: true },
   items: { type: [QuestionSchema], required: false, unique: true}
 });
 

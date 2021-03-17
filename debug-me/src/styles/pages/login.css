@@ -1,6 +1,15 @@
+.container {
+  /* background-color: #d45500ff; */
+}
+
 .card { 
   /* padding-inline: 10vw; */
-  width: 70vw;
+  /* width: 70vw; */
   text-align: center;
+  width: fit-content;
   /* font-size: x-large; */
+}
+
+.card-header {
+  background-color: transparent;
 }

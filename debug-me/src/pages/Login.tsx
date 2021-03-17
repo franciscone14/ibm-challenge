@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import '../styles/pages/login.css';
 import GoogleLogin from 'react-google-login';
 import TwitterLogin from 'react-twitter-login';
 import TokenContext from '../contexts/TokenContext';
 // import { Container } from './styles';
+import logo from '../assets/login.png';
+import useService from '../hooks/useService';
+import LoginService from '../services/LoginService';
+import { Token } from '../models/Token';
 
 const Login: React.FC = (props) => {
 
   const {token, setToken} = useContext(TokenContext);
+  const loginService = useService(LoginService);
 
   const handleLogin = async (googleData: any) => {
-    await axios.post("http://localhost:3000/auth/google", {
-        token: googleData.tokenId
-      },{ 
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }).then(res => {
-      sessionStorage.setItem('token', res.data.token);
-      if(setToken) setToken(res.data.token);
+    loginService.googleLogin(googleData.tokenId).subscribe(res => {
+      const { token, expires_at } = res as Token;
+      sessionStorage.setItem('token', token);
+      if(setToken) setToken(token);
     });
   }
 
@@ -28,7 +26,7 @@ const Login: React.FC = (props) => {
     <div className="container mt-5">
       <div className="card mx-auto my-auto" style={{height: '90vh'}}>
         <div className="card-header">
-          Social Authentication
+          <img alt="Logo" src={logo} />
         </div>
         <div className="card-body">
           <div className="mx-auto mt-5">
@@ -39,7 +37,7 @@ const Login: React.FC = (props) => {
               onFailure={handleLogin}
               cookiePolicy={'single_host_origin'}
               render={renderProps => (
-                <button className="btn btn-secondary" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <button className="btn btn-secondary" id="google-login" onClick={renderProps.onClick} disabled={renderProps.disabled}>
                   <div className="row">
                     <div className="col-1">
                       <i className="fa fa-google fa-lg" style={{color: 'white'}}></i>

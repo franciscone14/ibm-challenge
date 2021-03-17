@@ -1,6 +1,5 @@
-import { query, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import axios from 'axios';
-import { Question } from '../models/Question';
 import { Search } from '../models/Search';
 
 export default {
@@ -13,11 +12,13 @@ export default {
             }
         })
         .then(res => {
+            if(!request.session.userId)
+                throw new Error("User Id must be valid to create a search");
             new Search({
                 query: query,
                 pagination: res.data.items.length | 0,
                 items: res.data.items,
-                // user: request.userId || ''
+                userId: request.session.userId || ""
             }).save().then(newSearch => {
                 response.json({result: 'ok', id: newSearch._id});
             });

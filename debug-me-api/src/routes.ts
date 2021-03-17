@@ -1,17 +1,16 @@
 import { Router } from 'express';
-import Config from './config/config';
-
-import passportGoogle from './auth/google';
-import google from './auth/google';
 import verifyToken from './middlewares/token';
 import StackOverflowController from './controllers/StackOverflowController';
 import SearchHistoryController from './controllers/SearchHistoryController';
 
 const routes = Router();
 
-routes.get('/', verifyToken, (req, res) => { return res.send(req.userId);})
-routes.get('/search/:query', StackOverflowController.query)
-routes.get('/searches/:id', SearchHistoryController.index);
+routes.get('/', verifyToken, (req, res) => { return res.send(req.session.userId);})
+routes.get('/search/:query', verifyToken, StackOverflowController.query)
+routes.get('/searches/:id', verifyToken, SearchHistoryController.search);
+routes.get('/searches', verifyToken, SearchHistoryController.index);
+
+routes.delete('/searches/:id', verifyToken, SearchHistoryController.delete);
 
 // GOOGLE AUTH
 // routes.get("/auth/google", passportGoogle.authenticate("google", {

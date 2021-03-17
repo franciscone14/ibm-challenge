@@ -1,8 +1,9 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, RouteComponentProps, useParams } from 'react-router';
-import ItemsContext from '../contexts/ItemsContext';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import useService from '../hooks/useService';
 import { Question } from '../models/Question';
+import { Search } from '../models/Search';
+import SearchService from '../services/SearchService';
 
 import '../styles/pages/result-list.css';
 
@@ -12,7 +13,7 @@ interface ListItemProps {
 
 const ListItem: React.FC<ListItemProps> = ({item}) => {
   return (
-    <div className="card mb-3">
+    <div className="result card mb-3">
       <div className="card-header">
         {item.title}
       </div>
@@ -46,9 +47,13 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
           <div className="col-3">
             <a href={item.link} className="btn btn-primary">See Question</a>            
           </div>
-          <div className="col-4">
-            <a href={item.link} className="btn btn-light">View Accepted Answer</a>            
-          </div>
+          {item.accepted_answer_id ? (
+            <div className="col-4">
+              <a href={`https://stackoverflow.com/a/${item.accepted_answer_id}`} target="_blank" className="btn btn-light">
+                View Accepted Answer
+              </a>            
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="card-footer text-muted">
@@ -61,21 +66,24 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
 const ResultList: React.FC = () => {
   const { id } = useParams<{id:string}>();
   const [ items, setItems ] = useState<Question[]>([]);
+  const [ noItems, setNoItems ] = useState<boolean>(false);
+
+  const searchService = useService(SearchService);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/searches/${id}`)
-      .then(res => {
-        setItems(res.data.items);
-      })
-      .catch(err => console.log(err.response));
+    searchService.get<Search>(id).subscribe(search => {
+      const items = (search as Search).items
+      setItems(items);
+      setNoItems(items.length === 0);
+    })
   }, [])
-  // if(items.length === 0)
-  //   return <Redirect to="/" />
+  if(noItems)
+    return <h5>The provided query has not returned any items. Try again !</h5>
 
   return (
       <div id="list-container" className="container">
         <h1>Related Questions</h1>
-        <div className="container-xxl">
+        <div className="container">
         {
           items.map(item => (
             <ListItem
