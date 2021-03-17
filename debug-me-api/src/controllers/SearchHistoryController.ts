@@ -26,5 +26,17 @@ export default {
                 response.json({detail: 'There is no resource for the given Id'});
             }
         })
+    },
+    async delete(request: Request, response: Response) {
+        const { id } = request.params;
+        Search.deleteOne({_id: id, userId: request.session.userId}).then(res => {
+            if(res.ok){
+                response.status(204);
+            }
+            else {
+                response.status(400);
+                response.json({ detail: 'Could not performe action'})
+            }
+        });
     }
 }

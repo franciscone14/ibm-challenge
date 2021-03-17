@@ -10,6 +10,8 @@ routes.get('/search/:query', verifyToken, StackOverflowController.query)
 routes.get('/searches/:id', verifyToken, SearchHistoryController.search);
 routes.get('/searches', verifyToken, SearchHistoryController.index);
 
+routes.delete('/searches/:id', verifyToken, SearchHistoryController.delete);
+
 // GOOGLE AUTH
 // routes.get("/auth/google", passportGoogle.authenticate("google", {
 //     scope: ["profile", "email"]
