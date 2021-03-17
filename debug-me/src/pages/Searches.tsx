@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Search } from '../models/Search';
-import axios from 'axios';
 import useService from '../hooks/useService';
 import SearchService from '../services/SearchService';
-import { setServers } from 'dns';
 
 const SearchItem: React.FC<{search: Search, onClick: (e: React.MouseEvent) => void}> = ({search, onClick}) => {
 

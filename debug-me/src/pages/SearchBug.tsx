@@ -6,23 +6,19 @@ import { Question } from '../models/Question';
 import '../styles/pages/search-bug.css';
 // import { Container } from './styles';
 import logo from '../assets/login.png';
+import useService from '../hooks/useService';
+import QueryBugService from '../services/QueryBugService';
 
 const SearchBug: React.FC = () => {
   const [ query, setQuery ] = useState<string>("");
   const [ id, setId ] = useState<string>();
 
+  const queryService = useService(QueryBugService);
+
   function handleSubmit(e: React.MouseEvent){
     e.preventDefault();
     if(query !== ""){
-      axios.get(`http://localhost:3000/search/${query}`, {
-        headers: {
-          'x-access-token': sessionStorage.getItem('token')
-        }
-      })
-      .then(res => {
-        setId(res.data.id);
-      })
-      .catch(err => console.log(err.response));
+      queryService.get<String>(query).subscribe(id => setId(id.toString()));
     }
   }
 
