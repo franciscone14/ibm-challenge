@@ -8,6 +8,7 @@ import '../styles/pages/search-bug.css';
 import logo from '../assets/login.png';
 import useService from '../hooks/useService';
 import QueryBugService from '../services/QueryBugService';
+import { SearchResult } from '../models/SearchResult';
 
 const SearchBug: React.FC = () => {
   const [ query, setQuery ] = useState<string>("");
@@ -18,7 +19,9 @@ const SearchBug: React.FC = () => {
   function handleSubmit(e: React.MouseEvent){
     e.preventDefault();
     if(query !== ""){
-      queryService.get<String>(query).subscribe(id => setId(id.toString()));
+      queryService.get<SearchResult>(query).subscribe(search => {
+        setId(search.id);
+      });
     }
   }
 

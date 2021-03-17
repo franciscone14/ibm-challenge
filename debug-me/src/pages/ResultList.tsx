@@ -49,9 +49,13 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
           <div className="col-3">
             <a href={item.link} className="btn btn-primary">See Question</a>            
           </div>
-          <div className="col-4">
-            <a href={item.link} className="btn btn-light">View Accepted Answer</a>            
-          </div>
+          {item.accepted_answer_id ? (
+            <div className="col-4">
+              <a href={`https://stackoverflow.com/a/${item.accepted_answer_id}`} target="_blank" className="btn btn-light">
+                View Accepted Answer
+              </a>            
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="card-footer text-muted">
@@ -73,8 +77,8 @@ const ResultList: React.FC = () => {
       setItems(items);
     })
   }, [])
-  // if(items.length === 0)
-  //   return <Redirect to="/" />
+  if(items.length === 0)
+    return <Redirect to="/" />
 
   return (
       <div id="list-container" className="container">

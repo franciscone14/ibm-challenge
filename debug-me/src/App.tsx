@@ -34,7 +34,10 @@ function App() {
               <NavItem title="Home" route="/" active={true}/>
               <NavItem title="My Searches" route="/searches" />
               <NavDivider />
-              <NavItem title="Sair" route="/auth/logout" onClick={() => sessionStorage.removeItem('token')} />
+              <NavItem title="Sair" route="/auth/logout" onClick={() => {
+                sessionStorage.removeItem('token');
+                setToken("");
+              }} />
             </NavBar>
             <ItemsContext.Provider value={{items, setItems}}>
               <BrowserRouter>
