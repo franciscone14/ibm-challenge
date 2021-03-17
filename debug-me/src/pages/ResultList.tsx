@@ -1,7 +1,5 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, RouteComponentProps, useParams } from 'react-router';
-import ItemsContext from '../contexts/ItemsContext';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import useService from '../hooks/useService';
 import { Question } from '../models/Question';
 import { Search } from '../models/Search';
@@ -68,6 +66,7 @@ const ListItem: React.FC<ListItemProps> = ({item}) => {
 const ResultList: React.FC = () => {
   const { id } = useParams<{id:string}>();
   const [ items, setItems ] = useState<Question[]>([]);
+  const [ noItems, setNoItems ] = useState<boolean>(false);
 
   const searchService = useService(SearchService);
 
@@ -75,10 +74,11 @@ const ResultList: React.FC = () => {
     searchService.get<Search>(id).subscribe(search => {
       const items = (search as Search).items
       setItems(items);
+      setNoItems(items.length === 0);
     })
   }, [])
-  if(items.length === 0)
-    return <Redirect to="/" />
+  if(noItems)
+    return <h5>The provided query has not returned any items. Try again !</h5>
 
   return (
       <div id="list-container" className="container">

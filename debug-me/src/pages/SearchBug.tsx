@@ -1,8 +1,5 @@
-import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import ItemsContext from '../contexts/ItemsContext';
-import { Question } from '../models/Question';
 import '../styles/pages/search-bug.css';
 // import { Container } from './styles';
 import logo from '../assets/login.png';

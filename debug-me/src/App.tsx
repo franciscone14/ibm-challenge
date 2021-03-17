@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import NavBar from './components/NavBar';
 import NavDivider from './components/NavDivider';
 import NavItem from './components/NavItem';
-import ItemsContext from './contexts/ItemsContext';
+import Snackbar, { SnackbarProps } from './components/Snackbar';
+import SnackbarContext, { SnackbarContextType } from './contexts/SnackbarContext';
 import TokenContext from './contexts/TokenContext';
-import logo from './logo.svg';
 import { Question } from './models/Question';
 import Login from './pages/Login';
 import ResultList from './pages/ResultList';
@@ -16,14 +16,16 @@ import './styles/App.css';
 
 function App() {
   const [token, setToken] = useState<string>("");
-  const [items, setItems] = useState<Question[]>([]);
-
-  useEffect(() => console.log(items), [items]);
+  const [context, setContext] = useState<SnackbarProps>({
+    message: "",
+    type: 'success',
+    visible: false
+  });
 
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if(setToken) setToken(token || "");
-  }, [])
+  }, []);
 
   return (
     <TokenContext.Provider value={{token, setToken}}>
@@ -39,7 +41,8 @@ function App() {
                 setToken("");
               }} />
             </NavBar>
-            <ItemsContext.Provider value={{items, setItems}}>
+            <SnackbarContext.Provider value={{context, setContext}}>
+              <Snackbar />
               <BrowserRouter>
                 <Switch>
                   <Route path="/searches/:id" component={ResultList} />
@@ -47,7 +50,7 @@ function App() {
                   <Route path="/" component={SearchBug} />
                 </Switch>
               </BrowserRouter>
-            </ItemsContext.Provider>
+            </SnackbarContext.Provider>
           </div>
           ) : (
             <Login />

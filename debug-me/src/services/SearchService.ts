@@ -1,10 +1,16 @@
 import { Observable, EMPTY } from "rxjs";
 import { catchError } from "rxjs/operators";
 import Api from "../api/Api";
+import { SnackbarContextType } from "../contexts/SnackbarContext";
 import { Search } from "../models/Search";
+import GeneralService from "./GeneralService";
 import IService from "./IService";
 
-export default class SearchService implements IService {
+export default class SearchService extends GeneralService implements IService  {
+
+    constructor(context: SnackbarContextType){
+        super(context);
+    }
 
     get<Search>(id?: string): Observable<Search[] | Search> {
         const url: string = id ? `/searches/${id}` : '/searches';
@@ -12,7 +18,7 @@ export default class SearchService implements IService {
         return Api.get<Search[]>(url)
             .pipe(
                 catchError(err => {
-                    console.log(err);
+                    this.handleError(err.response.data.detail);
                     return [];
                 })
             )
@@ -28,9 +34,13 @@ export default class SearchService implements IService {
 
     delete<Search>(id: string): Observable<void | Search> {
         return Api.delete<Search>('/searches', id)
+            .pipe(() => {
+                this.handleSucess("Entry deleted !");
+                return EMPTY;
+            })
             .pipe(
                 catchError(err => {
-                    console.log(err);
+                    this.handleError(err.response.data.detail);
                     return EMPTY;
                 })
             )

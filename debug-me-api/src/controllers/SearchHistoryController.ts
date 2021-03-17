@@ -16,7 +16,7 @@ export default {
     },
     async search(request: Request, response: Response) {
         const { id } = request.params;
-        Search.findById(id).then(search => {
+        Search.findOne({_id: id, userId: request.session.userId}).then(search => {
             if(search){
                 response.status(200);
                 response.json(search);

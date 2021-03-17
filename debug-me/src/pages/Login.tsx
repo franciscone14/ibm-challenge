@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
 import '../styles/pages/login.css';
 import GoogleLogin from 'react-google-login';
 import TwitterLogin from 'react-twitter-login';
@@ -38,7 +37,7 @@ const Login: React.FC = (props) => {
               onFailure={handleLogin}
               cookiePolicy={'single_host_origin'}
               render={renderProps => (
-                <button className="btn btn-secondary" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <button className="btn btn-secondary" id="google-login" onClick={renderProps.onClick} disabled={renderProps.disabled}>
                   <div className="row">
                     <div className="col-1">
                       <i className="fa fa-google fa-lg" style={{color: 'white'}}></i>

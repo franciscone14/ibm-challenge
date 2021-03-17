@@ -3,17 +3,24 @@ import Api from "../api/Api";
 import { catchError } from 'rxjs/operators';
 import { SearchResult } from '../models/SearchResult';
 import IService from "./IService";
+import GeneralService from "./GeneralService";
+import { SnackbarContextType } from "../contexts/SnackbarContext";
 
-export default class QueryBugService implements IService {
+export default class QueryBugService extends GeneralService implements IService {
+
+    constructor(context: SnackbarContextType){
+        super(context);
+    }
 
     get<SearchResult>(query?: string): Observable<SearchResult> {
-        return Api.get<SearchResult>(`/search/${query}`)
-            .pipe(
-                catchError(err => {
-                    console.log(err);
-                    return EMPTY;
-                })
-            )
+        return Api.get<SearchResult>(`/search/${query}`, {        
+            'x-access-token': sessionStorage.getItem('token')
+        }).pipe(
+            catchError(err => {
+                this.handleError(err.response.data.detail);
+                return EMPTY;
+            })
+        );
     }
     
     post<T>(arg: T): Observable<T[]> {
