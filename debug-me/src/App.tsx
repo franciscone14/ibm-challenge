@@ -11,6 +11,7 @@ import { Question } from './models/Question';
 import Login from './pages/Login';
 import ResultList from './pages/ResultList';
 import SearchBug from './pages/SearchBug';
+import Searches from './pages/Searches';
 import './styles/App.css';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
               <BrowserRouter>
                 <Switch>
                   <Route path="/searches/:id" component={ResultList} />
+                  <Route path="/searches" component={Searches} />
                   <Route path="/" component={SearchBug} />
                 </Switch>
               </BrowserRouter>

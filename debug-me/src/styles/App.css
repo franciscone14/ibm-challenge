@@ -39,3 +39,20 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-primary {
+  background-color: #d45500ff;
+  border-color: #d45500ff;
+  color: black;
+}
+
+.btn-primary:hover{
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+/* .thead-dark {
+  background-color: #d45500ff;
+  color: white;
+} */

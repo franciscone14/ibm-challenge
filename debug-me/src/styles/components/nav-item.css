@@ -3,9 +3,10 @@
     align-items: center;
 }
 
-a {
-    color: rgb(167, 161, 161);
+a.nav {
+    color: black !important;
     text-decoration: none;
+    font-size: larger;
 }
 
 button.btn {

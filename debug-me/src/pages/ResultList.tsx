@@ -2,7 +2,10 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, RouteComponentProps, useParams } from 'react-router';
 import ItemsContext from '../contexts/ItemsContext';
+import useService from '../hooks/useService';
 import { Question } from '../models/Question';
+import { Search } from '../models/Search';
+import SearchService from '../services/SearchService';
 
 import '../styles/pages/result-list.css';
 
@@ -12,7 +15,7 @@ interface ListItemProps {
 
 const ListItem: React.FC<ListItemProps> = ({item}) => {
   return (
-    <div className="card mb-3">
+    <div className="result card mb-3">
       <div className="card-header">
         {item.title}
       </div>
@@ -62,12 +65,13 @@ const ResultList: React.FC = () => {
   const { id } = useParams<{id:string}>();
   const [ items, setItems ] = useState<Question[]>([]);
 
+  const searchService = useService(SearchService);
+
   useEffect(() => {
-    axios.get(`http://localhost:3000/searches/${id}`)
-      .then(res => {
-        setItems(res.data.items);
-      })
-      .catch(err => console.log(err.response));
+    searchService.get<Search>(id).subscribe(search => {
+      const items = (search as Search).items
+      setItems(items);
+    })
   }, [])
   // if(items.length === 0)
   //   return <Redirect to="/" />
@@ -75,7 +79,7 @@ const ResultList: React.FC = () => {
   return (
       <div id="list-container" className="container">
         <h1>Related Questions</h1>
-        <div className="container-xxl">
+        <div className="container">
         {
           items.map(item => (
             <ListItem

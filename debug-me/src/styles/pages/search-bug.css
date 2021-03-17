@@ -1,19 +1,33 @@
-form.container {
-    margin-top: 30vh;
-    display: flex !important;
-    align-items: center !important;
+.search-form {
+    display: flex;
+    flex-direction: column;
 }
 
-input {
-    width: 525px !important;
-    padding-inline: 10px;
-    padding-block: 10px;
-    /* display: block; */
-    /* align-self: center; */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 10rem 5rem 5rem 5rem;
+}
+
+.logo {
+    flex: 1;
+    display: block;
+    /* margin-top: 5rem; */
+    margin-left: auto;
+    margin-right: auto;
     /* text-align: center; */
 }
 
-button {
-    margin: 1rem;
-    padding: 10px;
+.input {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#error-info {
+    margin: 0 1rem 0 0;
+    width: 600px;
 }

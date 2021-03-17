@@ -5,6 +5,7 @@ import GoogleLogin from 'react-google-login';
 import TwitterLogin from 'react-twitter-login';
 import TokenContext from '../contexts/TokenContext';
 // import { Container } from './styles';
+import logo from '../assets/login.png';
 
 const Login: React.FC = (props) => {
 
@@ -28,7 +29,7 @@ const Login: React.FC = (props) => {
     <div className="container mt-5">
       <div className="card mx-auto my-auto" style={{height: '90vh'}}>
         <div className="card-header">
-          Social Authentication
+          <img alt="Logo" src={logo} />
         </div>
         <div className="card-body">
           <div className="mx-auto mt-5">

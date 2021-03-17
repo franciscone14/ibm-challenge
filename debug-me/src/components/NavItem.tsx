@@ -16,7 +16,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
                 props.onClick ? (
                     <button className="btn btn-secondary" onClick={props.onClick}>{props.title}</button>
                 ): (
-                    <a style={props.active ? {color: 'black'} : {color: 'rgb(167, 161, 161)'}} href={props.route}>{props.title}</a>
+                    <a className="nav" style={props.active ? {fontWeight: 'bold'} : {}} href={props.route}>{props.title}</a>
                 )
             }
         </div>
